@@ -1,0 +1,11 @@
+# 저작권: 논문 PDF 원문은 공개하지 않음 (앱은 공식 오픈액세스 링크로 연결)
+papers/*.pdf
+download/
+
+# 로컬 설정
+.claude/settings.local.json
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
