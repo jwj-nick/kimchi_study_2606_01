@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김치 아카데미 시험 대비 — 퀴즈 & 원문</title>
+<meta name="description" content="2026 김치리더스 아카데미 시험 대비 학습 앱: 원문 보기 + 빈칸 채우기 + 객관식/OX + 짝짓기 퀴즈">
+<style>
+  :root{
+    --bg:#fbf7f2; --card:#ffffff; --ink:#2a2320; --muted:#7c716a;
+    --line:#ece3da; --brand:#c0392b; --brand2:#e07b39; --ok:#2e7d52; --no:#c0392b;
+    --chip:#f3ede6; --shadow:0 2px 10px rgba(60,40,20,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+  .wrap{max-width:820px;margin:0 auto;padding:0 14px 80px}
+  header.top{position:sticky;top:0;z-index:20;background:rgba(251,247,242,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .htitle{display:flex;align-items:center;gap:10px;padding:12px 4px 8px}
+  .htitle .logo{font-size:26px}
+  .htitle h1{font-size:18px;margin:0;line-height:1.25}
+  .htitle small{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:2px}
+  nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none}
+  nav.tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);
+       padding:8px 13px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+  section{display:none;animation:fade .25s ease}
+  section.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;box-shadow:var(--shadow)}
+  h2.sec{font-size:20px;margin:18px 2px 4px}
+  .lead{color:var(--muted);font-size:14px;margin:0 2px 8px}
+  .btn{border:0;border-radius:10px;padding:10px 16px;font-size:15px;font-weight:700;cursor:pointer;background:var(--brand);color:#fff}
+  .btn.ghost{background:#fff;color:var(--brand);border:1.5px solid var(--brand)}
+  .btn.sm{padding:7px 12px;font-size:13px}
+  .btn:active{transform:translateY(1px)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .spacer{flex:1}
+  .pill{display:inline-block;background:#f4ece3;color:#8a6d55;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700}
+  .scorebar{font-size:14px;color:var(--muted);font-weight:600}
+  /* reading */
+  .chapnav{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+  .chapnav a{font-size:12.5px;text-decoration:none;color:#8a6d55;background:#f4ece3;border-radius:8px;padding:4px 9px;font-weight:600}
+  .chap{scroll-margin-top:130px}
+  .chap h3{font-size:18px;margin:6px 0 2px;color:var(--brand)}
+  .chap h4{font-size:15px;margin:12px 0 2px}
+  .chap ul{margin:6px 0;padding-left:20px}
+  .chap li{margin:3px 0}
+  .chap table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13.5px}
+  .chap th,.chap td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+  .chap th{background:#f7efe6}
+  .chap .scan{width:100%;border:1px solid var(--line);border-radius:10px;margin-top:8px;cursor:zoom-in}
+  .imgtoggle{font-size:13px;color:var(--brand);cursor:pointer;font-weight:700;user-select:none}
+  details.scanbox{margin-top:8px}
+  details.scanbox summary{cursor:pointer;color:var(--brand);font-weight:700;font-size:13.5px;list-style:none}
+  details.scanbox summary::-webkit-details-marker{display:none}
+  /* quiz */
+  .q{font-size:16px;font-weight:600;margin:2px 0 12px}
+  .q .num{color:var(--brand);font-weight:800;margin-right:6px}
+  .cloze-sent{font-size:17px;line-height:2.1;margin:6px 0 14px}
+  .blank{display:inline-block;min-width:96px;border:0;border-bottom:2px solid var(--brand);background:#fff8f4;
+          font-size:16px;padding:2px 8px;margin:0 3px;text-align:center;font-family:inherit;color:var(--ink)}
+  .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;
+       padding:11px 14px;margin:7px 0;font-size:15px;cursor:pointer;color:var(--ink)}
+  .opt:hover{border-color:var(--brand2)}
+  .opt.correct{border-color:var(--ok);background:#eef7f1}
+  .opt.wrong{border-color:var(--no);background:#fbeeec}
+  .opt.disabled{cursor:default;opacity:.9}
+  .feedback{margin:10px 0 2px;font-weight:700;font-size:15px}
+  .feedback.ok{color:var(--ok)}
+  .feedback.no{color:var(--no)}
+  .ans{background:#f7efe6;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:14px;color:#6a5646}
+  .ox-row{display:flex;gap:10px;margin-top:8px}
+  .ox-row .btn{flex:1}
+  /* matching */
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mcol h4{margin:2px 0 8px;font-size:14px;color:var(--muted)}
+  .mitem{border:1.5px solid var(--line);border-radius:10px;padding:10px;margin:6px 0;font-size:14px;cursor:pointer;background:#fff}
+  .mitem.sel{border-color:var(--brand);background:#fff5f2}
+  .mitem.done{border-color:var(--ok);background:#eef7f1;cursor:default;opacity:.75}
+  .mitem.badflash{border-color:var(--no);background:#fbeeec}
+  .tag{font-size:11px;color:#a98b73;font-weight:700}
+  .footer{color:var(--muted);font-size:12px;text-align:center;margin-top:26px;line-height:1.7}
+  .backlink{display:inline-block;margin:10px 2px;color:var(--brand);text-decoration:none;font-weight:700;font-size:14px}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#2a2320;color:#fff;
+         padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;z-index:50;pointer-events:none}
+  .toast.show{opacity:.96}
+  /* lightbox */
+  #lb{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:60;padding:12px}
+  #lb.show{display:flex}
+  #lb img{max-width:100%;max-height:100%;border-radius:8px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap" style="padding-bottom:0">
+    <div class="htitle">
+      <span class="logo">🥬</span>
+      <div>
+        <h1>김치 아카데미 시험 대비</h1>
+        <small>2026 김치리더스 아카데미 교육자료 · 원문 + 퀴즈</small>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-t="read">📖 원문 보기</button>
+      <button class="tab" data-t="cloze">✍️ 빈칸 채우기</button>
+      <button class="tab" data-t="mcq">✅ 객관식</button>
+      <button class="tab" data-t="ox">⭕ OX 퀴즈</button>
+      <button class="tab" data-t="match">🔗 짝짓기</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <a class="backlink" href="../" >← 김치 Phytate 스터디 홈으로</a>
+
+  <!-- ============ 원문 ============ -->
+  <section id="sec-read" class="active">
+    <h2 class="sec">📖 원문 보기</h2>
+    <p class="lead">교육자료 13장의 전체 내용입니다. 각 장 아래 <b>「원본 스캔 이미지 보기」</b>를 누르면 실제 스캔본을 볼 수 있어요.</p>
+    <div class="chapnav" id="chapnav"></div>
+    <div id="reader"></div>
+  </section>
+
+  <!-- ============ 빈칸 ============ -->
+  <section id="sec-cloze">
+    <h2 class="sec">✍️ 빈칸 채우기</h2>
+    <p class="lead">주요 내용의 핵심 단어가 랜덤으로 빈칸이 됩니다. 답을 입력하고 <b>확인</b>을 눌러 보세요.</p>
+    <div class="card">
+      <div class="row" style="margin-bottom:6px">
+        <span class="pill" id="cloze-ch">—</span>
+        <div class="spacer"></div>
+        <span class="scorebar" id="cloze-score">맞힌 0 / 시도 0</span>
+      </div>
+      <div class="cloze-sent" id="cloze-sent"></div>
+      <div class="feedback" id="cloze-fb" style="display:none"></div>
+      <div class="ans" id="cloze-ans" style="display:none"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="cloze-check">확인</button>
+        <button class="btn ghost sm" id="cloze-reveal">정답 보기</button>
+        <div class="spacer"></div>
+        <button class="btn ghost sm" id="cloze-next">다음 ▶</button>
+      </div>
+    </div>
+    <p class="lead">문항은 계속 랜덤으로 이어집니다. 여러 번 반복하며 외워 보세요!</p>
+  </section>
+
+  <!-- ============ 객관식 ============ -->
+  <section id="sec-mcq">
+    <h2 class="sec">✅ 객관식</h2>
+    <p class="lead">4지선다 문제입니다. 보기를 누르면 바로 채점됩니다.</p>
+    <div class="card">
+      <div class="row" style="margin-bottom:8px">
+        <span class="pill" id="mcq-prog">1 / 1</span>
+        <div class="spacer"></div>
+        <span class="scorebar" id="mcq-score">점수 0</span>
+      </div>
+      <div class="q" id="mcq-q"></div>
+      <div id="mcq-opts"></div>
+      <div class="feedback" id="mcq-fb" style="display:none"></div>
+      <div class="ans" id="mcq-ans" style="display:none"></div>
+      <div class="row" style="margin-top:12px">
+        <div class="spacer"></div>
+        <button class="btn" id="mcq-next">다음 ▶</button>
+      </div>
+    </div>
+    <div class="row"><button class="btn ghost sm" id="mcq-shuffle">🔀 문제 새로 섞기</button></div>
+  </section>
+
+  <!-- ============ OX ============ -->
+  <section id="sec-ox">
+    <h2 class="sec">⭕ OX 퀴즈</h2>
+    <p class="lead">맞으면 ⭕, 틀리면 ❌ 를 누르세요.</p>
+    <div class="card">
+      <div class="row" style="margin-bottom:8px">
+        <span class="pill" id="ox-prog">1 / 1</span>
+        <div class="spacer"></div>
+        <span class="scorebar" id="ox-score">점수 0</span>
+      </div>
+      <div class="q" id="ox-q"></div>
+      <div class="ox-row">
+        <button class="btn ghost" id="ox-o">⭕ 맞다</button>
+        <button class="btn ghost" id="ox-x">❌ 아니다</button>
+      </div>
+      <div class="feedback" id="ox-fb" style="display:none"></div>
+      <div class="ans" id="ox-ans" style="display:none"></div>
+      <div class="row" style="margin-top:12px">
+        <div class="spacer"></div>
+        <button class="btn" id="ox-next" style="display:none">다음 ▶</button>
+      </div>
+    </div>
+    <div class="row"><button class="btn ghost sm" id="ox-shuffle">🔀 문제 새로 섞기</button></div>
+  </section>
+
+  <!-- ============ 짝짓기 ============ -->
+  <section id="sec-match">
+    <h2 class="sec">🔗 짝짓기</h2>
+    <p class="lead">왼쪽 항목과 오른쪽 설명을 하나씩 눌러 짝을 맞추세요.</p>
+    <div class="row" style="margin:0 2px 10px">
+      <span class="pill" id="match-title">—</span>
+      <div class="spacer"></div>
+      <button class="btn ghost sm" id="match-prev">◀ 이전</button>
+      <button class="btn ghost sm" id="match-nextset">다음 세트 ▶</button>
+    </div>
+    <div class="card">
+      <div class="match-grid">
+        <div class="mcol"><h4>항목</h4><div id="match-left"></div></div>
+        <div class="mcol"><h4>설명</h4><div id="match-right"></div></div>
+      </div>
+      <div class="feedback ok" id="match-done" style="display:none">🎉 모두 맞혔어요!</div>
+    </div>
+  </section>
+
+  <div class="footer">
+    출처: 2026 김치리더스 아카데미 교육자료 · 세계김치연구소(WiKim) 자료 기반 정리<br>
+    학습용 정리본입니다. 최종 확인은 원본 교육자료로 하세요. · 진행 점수는 저장되지 않습니다.
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="lb"><img id="lb-img" alt=""></div>
+
+<script>
+/* =================== 데이터 =================== */
+const CHAPTERS = [
+ {id:1,title:"김치발효 의의",img:"01_김치발효_의의.jpg",body:`
+  <h4>김치발효 의의</h4>
+  <ul><li>김치의 원료 / 양념에 존재하는 <b>당성분</b>과 <b>유산균</b>에 의해 다양한 발효대사물을 생성 → 복합적인 맛과 건강지향적 기능 유도</li></ul>
+  <h4>김치발효 영향 인자</h4>
+  <table><tr><th>단계</th><th>영향 인자</th></tr>
+   <tr><td>원료</td><td>원료의 종류 / 당 함량 / 아미노산 함량</td></tr>
+   <tr><td>발효 조건</td><td>숙성 온도 / 김치 염도 / 혐기 조건</td></tr>
+   <tr><td>미생물</td><td>유산균 종류 / 유산균 분포</td></tr></table>
+  <p><b>→ 결과:</b> 김치의 숙성도 변화, 유산균 종류별 대사특성의 차이에 의한 맛(관능) 품질 변화</p>`},
+ {id:2,title:"절임의 특성",img:"02_절임의_특성.jpg",body:`
+  <h4>절임의 의미</h4>
+  <ul><li>배추가 부패되지 않고, 발효가 진행 유도하는 시작점</li>
+  <li>배추 조직내 <b>수분</b>과 절임수내 <b>염</b>의 교환을 통해 김치의 맛과 저장성을 향상시키는 공정</li></ul>
+  <h4>절임 영향 요소</h4>
+  <ul><li><b>원료적 특성 요소:</b> 배추 구중, 결구율</li>
+  <li><b>일반적 관리 요소:</b> 염수의 염도, 절임 시간, 절임온도, 염수 순환 여부, 절임조의 크기, 배추의 양 / 누름판의 무게</li></ul>
+  <h4>절임이 김치 품질에 미치는 영향</h4>
+  <ul><li>절임 부족시 과다한 <b>삼출수</b> 발생 → 풍미 저하 및 이상발효</li>
+  <li>과절임시 수용 염도(Acceptable salinity) 초과에 따른 Claim 발생</li></ul>`},
+ {id:3,title:"절임 목적",img:"03_절임_목적.jpg",body:`
+  <ul><li><b>김치 맛 좌우하는 핵심:</b> 간을 맞추는 효과</li>
+  <li><b>보존성 향상</b></li>
+  <li><b>양념 침투를 용이하게 함</b> — 덜 절여지면 양념이 잘 안배며 양도 많이 들어감, 국물이 많아짐</li>
+  <li><b>배추 조직감에 영향</b> — 과잉 절임 시 질겨짐 / 덜 절여지면 숙성 후 물러짐</li></ul>
+  <h4>탈수 후 최종 절임 염도</h4>
+  <ul><li>배추김치 기준 <b>1.6~1.8%</b> 적당</li>
+  <li>양념 염도는 <b>2.1~2.2%</b> 수준</li>
+  <li>김치 최종 제품 염도: 평균 <b>1.84~1.94%</b> (최저 1.41~최고 2.62%)</li></ul>
+  <p>탈수 제대로 안되면 염도가 낮아지고 양념이 잘 배지 않으며 김치에 물이 많아짐</p>`},
+ {id:4,title:"배추김치 재료 비율",img:"04_배추김치_재료_비율.jpg",body:`
+  <p><b>절임배추 vs 양념 = 75 : 25</b></p>
+  <table><tr><th>재료명</th><th>배합비(%)</th></tr>
+  <tr><td>절임배추</td><td>75.0</td></tr><tr><td>무</td><td>8.0</td></tr>
+  <tr><td>고춧가루</td><td>3.0</td></tr><tr><td>엽경채류</td><td>2.5</td></tr>
+  <tr><td>마늘</td><td>2.5</td></tr><tr><td>생강</td><td>0.5</td></tr>
+  <tr><td>젓갈</td><td>3.0</td></tr><tr><td>육수</td><td>3.0</td></tr>
+  <tr><td>찹쌀풀</td><td>2.5</td></tr><tr><td>식염(정제염)</td><td>x</td></tr>
+  <tr><td><b>합계</b></td><td><b>100</b></td></tr></table>
+  <h4>월별 배추당도 모니터링</h4>
+  <ul><li>월별 배추당도가 다르므로 일정한 품질(맛)을 유지하기 위해 <b>보정 필요</b></li>
+  <li>당도가 낮아지는 시기(4~5월, 8~10월)에는 보정이 필요</li></ul>`},
+ {id:5,title:"원료 특성과 김치 품질",img:"05_원료_특성과_김치_품질.jpg",body:`
+  <h4>당의 역할과 영향</h4>
+  <ul><li>당은 김치발효의 <b>에너지원</b>으로 사용, 미생물대사를 통해 다양한 산물 생성</li>
+  <li>당의 함량이 높을수록 김치의 최종 <b>산도는 증가</b>하는 경향</li></ul>
+  <h4>고추가루가 김치에 미치는 품질 특성</h4>
+  <ul><li>당·산·염의 관능적 기본요소 외 중요한 관능 속성 (<b>매운맛</b>)</li>
+  <li>외관품질에 영향을 미치는 중요한 인자 (<b>색택, 입도</b>)</li></ul>
+  <h4>김치 내에서 전분풀의 기능</h4>
+  <ul><li>전분풀은 효소에 의해 쉽게 분해되어 <b>풀의 기능을 상실</b> (양념 차지게/윤기 부여 기능 상실, 당도 높아져 빨리 익음)</li>
+  <li>분해로 양념에 <b>이수현상</b> 발생, 수분결착력 상실 → 김치 <b>양념씻김 현상</b>의 원인</li></ul>`},
+ {id:6,title:"김치 맛의 특징",img:"06_김치_맛의_특징.jpg",body:`
+  <ul>
+  <li><b>매운맛:</b> 고추로부터 유래된 <b>capsacinoids</b>가 지배적</li>
+  <li><b>신맛:</b> 유기산(젖산균의 발효 대사산물) / 과도한 생성은 <b>산패</b>의 원인 / 발효시기·원부재료·미생물·소금농도·온도·pH에 따라 조성 다름</li>
+  <li><b>감칠맛:</b> 유리아미노산, 핵산 / 배추·젓갈류 등 동물성 원료 유래 / 핵산은 주로 <b>젓갈이나 액젓</b>에서 유래</li>
+  <li><b>짠맛:</b> 소금의 순수 NaCl 맛 / 일반 김치 식염 농도 <b>1.5~2.5%</b></li>
+  <li><b>단맛:</b> 유리당·감미성분, 설탕 / 발효 후기에 <b>mannitol(만니톨)</b> 생성 → 시원한 단맛(청량감), 적숙기 풍미 주요 물질</li>
+  <li><b>쓴맛:</b> 천일염(MgCl₂·MgSO₄·CaCl₂), 배추의 <b>glucosinolate</b></li>
+  <li><b>탄산미:</b> CO₂ 및 일부 citric·gluconic·ascorbic acid가 상쾌한 맛 부여</li></ul>`},
+ {id:7,title:"김치 발효와 유산균",img:"07_김치_발효와_유산균.jpg",body:`
+  <h4>김치발효 유산균의 특성</h4>
+  <table><tr><th>유산균</th><th>발효산물</th><th>김치 맛</th></tr>
+  <tr><td rowspan="3">류코노스톡</td><td>만니톨</td><td>시원한 단맛</td></tr>
+  <tr><td>이산화탄소</td><td>톡 쏘는 맛</td></tr>
+  <tr><td>젖산</td><td>신맛</td></tr>
+  <tr><td>와이셀라 / 락토바실러스</td><td>젖산</td><td>신맛</td></tr></table>
+  <ul><li><b>류코노스톡:</b> 김치 특유의 풍미, <b>dextran 생성(윤기 부여)</b>, 겨울 김치에 많이 분포 → 겨울김치가 맛있는 이유</li></ul>
+  <h4>김치의 맛과 향에 영향을 주는 요인</h4>
+  <ul><li>재료의 종류·특성(계절·환경적 영향), 원부재료 함량, 부재료 상태, 우점 유산균 종류, 발효 온도</li></ul>`},
+ {id:8,title:"원료 특성 — 방사선 실험(멸균)",img:"08_원료특성에_따른_김치_품질변화.jpg",body:`
+  <p><b>김치 원료의 미생물이 발효 미생물 군집에 주는 영향</b></p>
+  <ul><li>재료 중 한 개씩만 제외하고 나머지를 <b>방사선처리(멸균)</b>하여 발효 관찰</li>
+  <li><b>배추와 마늘</b>을 멸균처리 하지 않은 김치에서 정상적인 발효 진행</li></ul>
+  <table><tr><th>약어</th><th>재료</th><th>발효</th></tr>
+  <tr><td>CabK</td><td>배추(Cabbage)</td><td>발효 O</td></tr>
+  <tr><td>GarK</td><td>마늘(Garlic)</td><td>발효 O</td></tr>
+  <tr><td>GinK</td><td>생강(Ginger)</td><td>발효 X</td></tr>
+  <tr><td>PePeK</td><td>고추(Red Pepper)</td><td>발효 X</td></tr>
+  <tr><td>NCK</td><td>음성대조(Negative Control)</td><td>발효 X</td></tr></table>`},
+ {id:9,title:"원료 특성 — 소금 무기질·경도",img:"09_원료특성_김치_품질변화.jpg",body:`
+  <p><b>소금이 김치 품질에 미치는 영향</b> — 소금종류: 1년/3년 저장 천일염, 탈수염, 정제염</p>
+  <h4>소금종류별 주요 무기질 함량 (mg/100g)</h4>
+  <table><tr><th>성분</th><th>1년천일염</th><th>3년천일염</th><th>탈수염</th><th>정제염</th></tr>
+  <tr><td>Na</td><td>33,489</td><td>33,583</td><td>32,381</td><td>38,633</td></tr>
+  <tr><td>Mg</td><td>515</td><td>703</td><td>1,254</td><td>26</td></tr>
+  <tr><td>K</td><td>134</td><td>191</td><td>214</td><td>278</td></tr>
+  <tr><td>Ca</td><td>113</td><td>289</td><td>84</td><td>47</td></tr></table>
+  <h4>천일염을 쓰는 이유</h4>
+  <ul><li>무기물이 발효미생물 생육·발효의 영양공급원</li>
+  <li><b>Ca</b>이 채소 조직내 펙틴과 복합체 형성 → <b>경도 증가</b></li>
+  <li>정제염 사용시 발효 후기 <b>산막효모 증가 → 연부현상</b></li></ul>
+  <p><b>경도 비교:</b> 정제염(≈1,800g) &lt; 1년천일염(≈2,020g) &lt; 3년천일염(≈2,380g)</p>`},
+ {id:10,title:"원료 특성 — 정제염·천일염·암염",img:"10_원료특성_김치_품질변화.jpg",body:`
+  <p><b>소금이 김치 품질에 미치는 영향</b> — 소금종류: 정제염, 천일염, 암염</p>
+  <h4>소금종류별 주요 무기질 함량 (mg/100g)</h4>
+  <table><tr><th>성분</th><th>정제염</th><th>천일염</th><th>암염</th></tr>
+  <tr><td>Na⁺</td><td>37,196</td><td>31,785</td><td>37,706</td></tr>
+  <tr><td>Mg²⁺</td><td>250</td><td>1,187</td><td>676</td></tr>
+  <tr><td>K⁺</td><td>260</td><td>471</td><td>636</td></tr>
+  <tr><td>Ca²⁺</td><td>289</td><td>449</td><td>685</td></tr></table>
+  <h4>김치 내 소금의 역할</h4>
+  <ul><li>배추 조직 연하게 → <b>아삭함 유지</b></li>
+  <li>미생물 번식 억제·젖산 발효 → 내염성 없는 미생물 억제</li>
+  <li>관능적 기호도 향상 → 짠맛으로 김치 맛 향상</li>
+  <li>→ <b>젖산발효·맛 등 균일한 품질 유지</b></li></ul>
+  <h4>어떤 소금이 좋을까?</h4>
+  <ul><li>천일염과 암염이 김치 <b>조직감 개선</b>에 효과</li>
+  <li>천일염과 정제염 사용이 <b>아미노산 생성</b>에 영향</li></ul>`},
+ {id:11,title:"원료 특성 — 마늘",img:"11_원료특성_김치_품질변화.jpg",body:`
+  <p><b>마늘이 김치 품질에 미치는 영향</b></p>
+  <ul><li>마늘의 <b>항균물질</b> → 발효 초기 대장균군·잡균 억제</li>
+  <li>마늘을 넣지 않으면? → 발효가 <b>빨리 진행</b>, 대장균군이 발효 후반까지 존재</li>
+  <li>열처리 마늘은 발효가 <b>지연</b>되는 효과는 있음 / 대장균군·효모곰팡이 수치 높고 후반까지 검출</li>
+  <li><b>생마늘</b>을 사용하는 김치에서 <b>만니톨 함량이 가장 높음</b></li>
+  <li>냉동 마늘 김치는 생마늘 김치와 대사산물이 비슷한 패턴</li>
+  <li>열처리 마늘 김치는 생마늘 김치와 향기성분이 비슷한 패턴</li></ul>`},
+ {id:12,title:"발효 환경 — 온도",img:"12_발효환경에_따른_김치의_품질변화.jpg",body:`
+  <p><b>발효 온도가 김치 품질에 미치는 영향</b></p>
+  <table><tr><th>구분</th><th>처리 조건</th></tr>
+  <tr><td>CON</td><td>제조 후 바로 4°C 냉장보관</td></tr>
+  <tr><td>D1</td><td>제조 후 1일 상온 보관 후 4°C 냉장보관</td></tr>
+  <tr><td>D2</td><td>제조 후 2일 상온 보관 후 4°C 냉장보관</td></tr></table>
+  <ul><li>제조 직후 발효 온도에 따라 <b>초기 우점하는 유산균이 달라짐</b></li></ul>`},
+ {id:13,title:"발효음식의 특징 / 김치의 어원",img:"13_발효음식_특징_김치_어원.jpg",body:`
+  <h4>발효음식의 특징</h4>
+  <table><tr><th>구분</th><th>내용</th></tr>
+  <tr><td>소화 흡수 증진</td><td>미생물에 의한 1차 소화 → 저분자 물질</td></tr>
+  <tr><td>영양학적 가치 증대</td><td>영양소 파괴 최소화(일부 증가), 새로운 생태 조성</td></tr>
+  <tr><td>독성물질 파괴·약화</td><td>대사산물·생리활성물질 새로 생성</td></tr>
+  <tr><td>저장성 향상</td><td>탁월</td></tr>
+  <tr><td>풍미 변화</td><td>호불호 존재</td></tr>
+  <tr><td>기타</td><td>탄소 배출 감소</td></tr></table>
+  <h4>김치의 어원과 변화 과정</h4>
+  <ul><li>딤채 → 짐치 → 김치</li><li>디히 → 지히 → 지</li></ul>`}
+];
+
+/* 빈칸: [[정답||허용답1||허용답2]] 형태로 표시. 한 문장에 여러개면 랜덤 하나만 빈칸 */
+const CLOZE = [
+ [1,"김치발효는 원료·양념의 [[당성분]]과 [[유산균]]에 의해 다양한 발효대사물을 생성한다."],
+ [1,"김치발효 영향 인자 중 발효 조건에는 숙성 온도, 김치 [[염도]], [[혐기 조건]]이 있다."],
+ [2,"절임은 배추 조직내 [[수분]]과 절임수내 [[염]]의 교환을 통해 맛과 저장성을 향상시킨다."],
+ [2,"절임의 원료적 특성 요소는 배추 [[구중]]과 [[결구율]]이다."],
+ [2,"절임이 부족하면 김치 제조 후 과다한 [[삼출수]]가 발생한다."],
+ [2,"과절임 시 수용 염도([[Acceptable salinity]]) 초과로 Claim이 발생한다."],
+ [3,"배추김치의 적정 최종 절임 염도는 [[1.6~1.8%||1.6-1.8%]]이다."],
+ [3,"양념의 염도는 [[2.1~2.2%||2.1-2.2%]] 수준이다."],
+ [3,"김치 최종 제품의 평균 염도는 [[1.84~1.94%||1.84-1.94%]]이다."],
+ [3,"과잉 절임 시 배추 조직이 [[질겨진다||질겨짐]], 덜 절여지면 숙성 후 [[물러진다||물러짐]]."],
+ [4,"절임배추와 양념의 배합 비율은 [[75:25]]이다."],
+ [4,"배추김치 재료 배합비에서 무는 [[8.0||8]]%, 고춧가루는 [[3.0||3]]%이다."],
+ [4,"월별 배추당도가 다르므로 일정한 품질을 위해 [[보정]]이 필요하다."],
+ [5,"당은 김치발효의 [[에너지원]]으로 사용된다."],
+ [5,"당의 함량이 높을수록 김치의 최종 [[산도]]는 증가한다."],
+ [5,"고추가루는 김치 외관품질에 영향을 주는 인자로 [[색택]]과 입도가 있다."],
+ [5,"전분풀은 효소에 의해 쉽게 분해되어 [[풀]]의 기능을 상실한다."],
+ [5,"전분풀 분해로 양념에 [[이수현상]]이 발생하고, 이는 김치의 [[양념씻김]] 현상의 원인이 된다."],
+ [6,"매운맛은 고추에서 유래한 [[capsacinoids||캡사시노이드]]가 지배적이다."],
+ [6,"신맛은 젖산균의 발효 대사산물인 [[유기산]]에서 비롯된다."],
+ [6,"유기산의 과도한 생성은 김치 [[산패]]의 원인이 된다."],
+ [6,"감칠맛 성분인 핵산은 주로 [[젓갈||젓갈이나 액젓||액젓]]에서 유래한다."],
+ [6,"일반적인 김치의 식염 농도는 [[1.5~2.5%||1.5-2.5%]]이다."],
+ [6,"발효 후기에는 초기에 없던 [[mannitol||만니톨]]이 생성되어 시원한 단맛을 준다."],
+ [6,"쓴맛은 천일염 성분과 배추의 [[glucosinolate||글루코시놀레이트]] 성분에서 온다."],
+ [6,"탄산미는 [[CO2||CO₂||이산화탄소]] 및 일부 유기산이 부여하는 상쾌한 맛이다."],
+ [7,"[[류코노스톡]]은 겨울 김치에 많이 분포해 겨울김치가 맛있는 이유가 된다."],
+ [7,"류코노스톡은 [[dextran||덱스트란]]을 생성해 김치에 윤기를 부여한다."],
+ [7,"류코노스톡이 만니톨을 만들면 [[시원한 단맛]], 이산화탄소를 만들면 [[톡 쏘는 맛]]이 난다."],
+ [8,"방사선(멸균) 실험에서 [[배추]]와 [[마늘]]을 멸균하지 않은 김치에서 정상 발효가 진행됐다."],
+ [8,"실험군 약어에서 CabK는 [[배추||Cabbage]], GarK는 [[마늘||Garlic]] 유래 김치를 뜻한다."],
+ [9,"천일염의 [[Ca||칼슘]]이 채소 조직 펙틴과 복합체를 형성해 경도를 높인다."],
+ [9,"정제염 사용 시 발효 후기 [[산막효모]]가 증가해 연부현상이 생긴다."],
+ [9,"소금 종류별 경도는 정제염 < [[1년천일염]] < 3년천일염 순이다."],
+ [10,"김치 내 소금은 배추 조직을 연하게 해 [[아삭함]]을 유지시킨다."],
+ [10,"천일염과 [[암염]]이 김치의 조직감 개선에 효과가 있다."],
+ [11,"마늘의 항균물질은 발효 초기 [[대장균군]]이나 잡균을 억제한다."],
+ [11,"마늘을 넣지 않으면 김치 발효가 [[빨리||빠르게]] 진행된다."],
+ [11,"[[생마늘]]을 사용한 김치에서 만니톨 함량이 가장 높다."],
+ [12,"발효온도 실험에서 CON은 제조 후 바로 [[4°C||4도||4℃]] 냉장보관한 것이다."],
+ [12,"제조 직후 발효 온도에 따라 초기 [[우점]]하는 유산균이 달라진다."],
+ [13,"발효음식은 미생물에 의한 1차 소화로 [[저분자]] 물질을 만들어 소화흡수를 증진한다."],
+ [13,"김치의 어원은 딤채 → [[짐치]] → 김치로 변화했다."]
+];
+
+const MCQ = [
+ [4,"절임배추와 양념의 배합 비율은?",["60:40","70:30","75:25","80:20"],2],
+ [3,"배추김치의 적정 최종 절임 염도는?",["0.8~1.0%","1.6~1.8%","2.1~2.2%","2.6~2.8%"],1],
+ [3,"양념의 염도 수준으로 옳은 것은?",["1.0~1.2%","1.6~1.8%","2.1~2.2%","3.0~3.5%"],2],
+ [3,"김치 최종 제품의 평균 염도는?",["1.41%","1.84~1.94%","2.62%","3.0%"],1],
+ [6,"매운맛을 내는, 고추에서 유래한 성분은?",["glucosinolate","capsacinoids","만니톨","dextran"],1],
+ [6,"김치 신맛의 주된 원인 물질은?",["유리아미노산","NaCl","유기산(젖산)","capsacinoids"],2],
+ [6,"발효 후기에 생성되어 시원한 단맛(청량감)을 내는 물질은?",["젖산","만니톨(mannitol)","dextran","glucosinolate"],1],
+ [6,"감칠맛 성분인 핵산은 주로 어디서 유래하는가?",["고춧가루","젓갈이나 액젓","설탕","천일염"],1],
+ [6,"일반적인 김치의 식염 농도로 옳은 것은?",["0.5~1.0%","1.5~2.5%","3.0~4.0%","5% 이상"],1],
+ [6,"쓴맛과 관련된 배추의 성분은?",["capsacinoids","glucosinolate","만니톨","유기산"],1],
+ [6,"톡 쏘는 탄산미를 부여하는 주된 기체는?",["산소","질소","이산화탄소(CO₂)","수소"],2],
+ [7,"겨울 김치에 많이 분포하며 김치 특유 풍미와 윤기(dextran)를 내는 유산균은?",["락토바실러스","류코노스톡","와이셀라","엔테로박터"],1],
+ [7,"류코노스톡이 생성하여 김치에 윤기를 부여하는 물질은?",["만니톨","젖산","dextran","glucosinolate"],2],
+ [8,"방사선(멸균) 실험에서 정상 발효가 진행된 재료를 남긴 김치는?",["생강과 고추","배추와 마늘","무와 생강","고추와 배추"],1],
+ [8,"실험군 약어 'GarK'가 뜻하는 것은?",["생강 유래 김치","마늘 유래 김치","배추 유래 김치","고추 유래 김치"],1],
+ [9,"천일염 사용 시 경도를 높이는, 펙틴과 복합체를 형성하는 무기질은?",["Na","K","Ca","Fe"],2],
+ [9,"정제염 사용 시 발효 후기에 증가하여 연부현상을 일으키는 것은?",["젖산균","산막효모","대장균군","곰팡이독소"],1],
+ [9,"소금 종류별 김치 경도의 크기 순서로 옳은 것은?",["3년천일염 < 1년천일염 < 정제염","정제염 < 1년천일염 < 3년천일염","1년천일염 < 정제염 < 3년천일염","정제염 < 3년천일염 < 1년천일염"],1],
+ [11,"마늘을 첨가하지 않으면 나타나는 현상은?",["발효가 느려진다","발효가 빨리 진행되고 대장균군이 후반까지 존재","만니톨이 사라진다","색이 진해진다"],1],
+ [11,"만니톨 함량이 가장 높은 마늘 처리 방법은?",["열처리 마늘","생마늘","냉동 마늘","건조 마늘"],1],
+ [12,"발효온도 실험에서 'CON'의 처리 조건은?",["1일 상온 후 냉장","2일 상온 후 냉장","제조 후 바로 4°C 냉장","상온에서만 보관"],2],
+ [13,"김치의 어원 변화 과정으로 옳은 것은?",["김치→짐치→딤채","딤채→짐치→김치","지→지히→디히","짐치→김치→딤채"],1],
+ [5,"당의 함량이 높을수록 김치의 최종 산도는 어떻게 되는가?",["감소한다","변화 없다","증가한다","불규칙하다"],2],
+ [5,"전분풀이 분해되며 나타나는, 김치 양념이 씻겨나가는 현상의 직접 원인은?",["capsacinoids 생성","이수현상·수분결착력 상실","만니톨 생성","염도 상승"],1],
+ [2,"절임의 '원료적 특성 요소'에 해당하는 것은?",["염수의 염도","절임 시간","배추 구중·결구율","누름판 무게"],2],
+ [2,"절임이 부족할 때 발생하는 문제로 옳은 것은?",["김치가 질겨짐","과다한 삼출수 발생·이상발효","염도가 너무 높아짐","색이 진해짐"],1],
+ [10,"김치 조직감 개선에 효과가 있다고 한 소금은?",["정제염","천일염과 암염","탈수염","정제염과 탈수염"],1],
+ [1,"김치발효로 얻어지는 결과로 가장 알맞은 것은?",["색이 옅어짐","숙성도 변화와 유산균별 맛(관능) 품질 변화","무게 증가","수분 증가만"],1],
+ [6,"김치 짠맛의 정체로 옳은 것은?",["유기산","소금의 순수 NaCl 맛","핵산","만니톨"],1],
+ [13,"발효음식의 특징으로 옳지 않은 것은?",["소화 흡수 증진","저장성 향상","탄소 배출 증가","독성물질 파괴·약화"],2]
+];
+
+const OX = [
+ [4,"절임배추와 양념의 비율은 70:30이다.",false,"75:25가 맞습니다."],
+ [3,"배추김치의 적정 최종 절임 염도는 1.6~1.8%이다.",true,""],
+ [6,"만니톨은 김치에 신맛을 낸다.",false,"만니톨은 시원한 단맛(청량감)을 냅니다. 신맛은 젖산."],
+ [6,"매운맛은 고추의 capsacinoids에서 유래한다.",true,""],
+ [9,"정제염을 사용하면 김치 경도가 가장 높아진다.",false,"3년천일염이 가장 높습니다(정제염 < 1년 < 3년)."],
+ [11,"마늘을 넣지 않으면 김치 발효가 느려진다.",false,"오히려 빨리 진행되고 대장균군이 후반까지 존재합니다."],
+ [7,"류코노스톡은 여름 김치에 많이 분포한다.",false,"겨울 김치에 많이 분포합니다."],
+ [6,"감칠맛의 핵산은 주로 젓갈이나 액젓에서 유래한다.",true,""],
+ [9,"천일염의 Ca이 펙틴과 복합체를 형성해 경도를 높인다.",true,""],
+ [6,"유기산이 과도하게 생성되면 김치 산패의 원인이 된다.",true,""],
+ [2,"절임이 부족하면 삼출수가 적게 나온다.",false,"과다한 삼출수가 발생합니다."],
+ [11,"생마늘을 사용한 김치에서 만니톨 함량이 가장 높다.",true,""],
+ [5,"전분풀은 김치 안에서 오래도록 풀 기능을 유지한다.",false,"효소에 의해 쉽게 분해되어 풀 기능을 상실합니다."],
+ [6,"김치의 일반적인 식염 농도는 1.5~2.5%이다.",true,""],
+ [5,"당 함량이 높을수록 김치의 최종 산도는 감소한다.",false,"증가합니다."],
+ [8,"방사선 실험에서 생강·고추를 남긴 김치에서 정상 발효가 일어났다.",false,"배추·마늘을 남긴 김치(CabK·GarK)에서 발효가 일어났습니다."],
+ [12,"제조 직후 발효 온도에 따라 초기 우점 유산균이 달라진다.",true,""],
+ [5,"고추가루는 김치의 색택과 입도 등 외관품질에 영향을 준다.",true,""]
+];
+
+const MATCH = [
+ {title:"맛 ↔ 원인 물질",pairs:[
+   ["매운맛","capsacinoids(고추)"],["신맛","유기산(젖산)"],["감칠맛","유리아미노산·핵산"],
+   ["짠맛","소금(NaCl)"],["쓴맛","glucosinolate"],["탄산미","CO₂"]]},
+ {title:"발효산물 ↔ 특징/맛",pairs:[
+   ["만니톨","시원한 단맛"],["이산화탄소","톡 쏘는 맛"],["젖산","신맛"],["dextran","윤기 부여"]]},
+ {title:"소금 종류 ↔ 특징",pairs:[
+   ["정제염","Mg 낮음·연부현상"],["천일염","무기물 풍부·경도↑"],["암염","Ca 가장 높음"],["3년천일염","경도 가장 높음"]]},
+ {title:"실험군 약어 ↔ 재료",pairs:[
+   ["CabK","배추"],["GarK","마늘"],["GinK","생강"],["PePeK","고추"],["NCK","음성대조"]]},
+ {title:"절임 상태 ↔ 결과",pairs:[
+   ["절임 부족","과다한 삼출수·이상발효"],["과절임","조직 질겨짐·Claim"],["적정 절임(1.6~1.8%)","정상 발효·아삭함"]]}
+];
+
+/* =================== 공통 =================== */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function norm(s){return (s||'').toString().trim().toLowerCase().replace(/\s+/g,'').replace(/[.,·`'"]/g,'');}
+let toastT;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1400);}
+function chName(id){const c=CHAPTERS.find(c=>c.id===id);return c?`${id}. ${c.title}`:id;}
+
+/* 탭 전환 */
+$('#tabs').addEventListener('click',e=>{
+  const b=e.target.closest('.tab'); if(!b)return;
+  $$('.tab').forEach(t=>t.classList.remove('active')); b.classList.add('active');
+  $$('section').forEach(s=>s.classList.remove('active'));
+  $('#sec-'+b.dataset.t).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* =================== 원문 =================== */
+(function(){
+  const nav=$('#chapnav'), r=$('#reader');
+  CHAPTERS.forEach(c=>{
+    const a=document.createElement('a');a.href='#chap'+c.id;a.textContent=c.id+'. '+c.title;nav.appendChild(a);
+  });
+  r.innerHTML = CHAPTERS.map(c=>`
+    <div class="card chap" id="chap${c.id}">
+      <h3>${c.id}. ${c.title}</h3>
+      ${c.body}
+      <details class="scanbox"><summary>🖼 원본 스캔 이미지 보기</summary>
+        <img class="scan" src="${c.img}" alt="${c.title} 스캔" loading="lazy" onclick="openLb('${c.img}')">
+      </details>
+    </div>`).join('');
+})();
+window.openLb=src=>{$('#lb-img').src=src;$('#lb').classList.add('show');};
+$('#lb').addEventListener('click',()=>$('#lb').classList.remove('show'));
+
+/* =================== 빈칸 채우기 =================== */
+const cloze=(function(){
+  let queue=[], cur=null, done=0, hit=0, answered=false;
+  function refill(){queue=shuffle(CLOZE);}
+  function parse(str){
+    const parts=[]; let idx=0; const re=/\[\[(.+?)\]\]/g; let m, blanks=[];
+    while((m=re.exec(str))){
+      if(m.index>idx) parts.push({t:'text',v:str.slice(idx,m.index)});
+      const answers=m[1].split('||');
+      parts.push({t:'blank',answers}); blanks.push(parts.length-1); idx=re.lastIndex;
+    }
+    if(idx<str.length) parts.push({t:'text',v:str.slice(idx)});
+    return {parts,blanks};
+  }
+  function next(){
+    if(!queue.length) refill();
+    const item=queue.pop(); const {parts,blanks}=parse(item[1]);
+    const blankPick=blanks[Math.floor(Math.random()*blanks.length)];
+    cur={ch:item[0],parts,blankPick}; answered=false;
+    $('#cloze-ch').textContent=chName(item[0]);
+    $('#cloze-fb').style.display='none'; $('#cloze-ans').style.display='none';
+    const html=parts.map((p,i)=>{
+      if(p.t==='text')return p.v.replace(/</g,'&lt;');
+      if(i===blankPick)return `<input class="blank" id="cloze-input" autocomplete="off" placeholder="?">`;
+      return `<b>${p.answers[0]}</b>`;
+    }).join('');
+    $('#cloze-sent').innerHTML=html;
+    const inp=$('#cloze-input'); if(inp){inp.focus();inp.addEventListener('keydown',e=>{if(e.key==='Enter')check();});}
+  }
+  function updateScore(){$('#cloze-score').textContent=`맞힌 ${hit} / 시도 ${done}`;}
+  function check(){
+    if(answered){next();return;}
+    const inp=$('#cloze-input'); if(!inp)return;
+    const val=inp.value; if(!norm(val)){toast('답을 입력해 주세요');return;}
+    const ok=cur.parts[cur.blankPick].answers.some(a=>norm(a)===norm(val));
+    answered=true; done++; if(ok)hit++; updateScore();
+    const fb=$('#cloze-fb'); fb.style.display='block';
+    fb.className='feedback '+(ok?'ok':'no'); fb.textContent=ok?'⭕ 정답입니다!':'❌ 다시 확인해 보세요';
+    const ans=$('#cloze-ans'); ans.style.display='block';
+    ans.innerHTML='정답: <b>'+cur.parts[cur.blankPick].answers[0]+'</b>';
+    inp.style.borderColor=ok?'var(--ok)':'var(--no)';
+  }
+  function reveal(){
+    if(!cur)return; const ans=$('#cloze-ans'); ans.style.display='block';
+    ans.innerHTML='정답: <b>'+cur.parts[cur.blankPick].answers[0]+'</b>';
+  }
+  $('#cloze-check').onclick=check; $('#cloze-next').onclick=next; $('#cloze-reveal').onclick=reveal;
+  return {start(){done=0;hit=0;updateScore();refill();next();}};
+})();
+cloze.start();
+
+/* =================== 객관식 =================== */
+const mcq=(function(){
+  let queue=[], i=0, score=0, locked=false;
+  function build(){queue=shuffle(MCQ).map(q=>{
+    const opts=q[2].map((t,idx)=>({t,correct:idx===q[3]}));
+    return {ch:q[0],q:q[1],opts:shuffle(opts)};});}
+  function render(){
+    locked=false; const item=queue[i];
+    $('#mcq-prog').textContent=`${i+1} / ${queue.length}`;
+    $('#mcq-score').textContent='점수 '+score;
+    $('#mcq-q').innerHTML=`<span class="num">Q${i+1}.</span>${item.q} <span class="tag">[${chName(item.ch)}]</span>`;
+    const box=$('#mcq-opts'); box.innerHTML='';
+    item.opts.forEach(o=>{
+      const b=document.createElement('button');b.className='opt';b.textContent=o.t;
+      b.onclick=()=>pick(b,o,item); box.appendChild(b);
+    });
+    $('#mcq-fb').style.display='none'; $('#mcq-ans').style.display='none';
+  }
+  function pick(btn,o,item){
+    if(locked)return; locked=true;
+    $$('#mcq-opts .opt').forEach(x=>x.classList.add('disabled'));
+    const fb=$('#mcq-fb'); fb.style.display='block';
+    if(o.correct){btn.classList.add('correct');score++;fb.className='feedback ok';fb.textContent='⭕ 정답!';}
+    else{btn.classList.add('wrong');fb.className='feedback no';fb.textContent='❌ 오답';
+      $$('#mcq-opts .opt').forEach(x=>{if(x.textContent===item.opts.find(z=>z.correct).t)x.classList.add('correct');});
+      const ans=$('#mcq-ans');ans.style.display='block';ans.innerHTML='정답: <b>'+item.opts.find(z=>z.correct).t+'</b>';}
+    $('#mcq-score').textContent='점수 '+score;
+  }
+  function nextQ(){
+    if(!locked && queue.length){/*allow skip*/}
+    i++; if(i>=queue.length){toast('마지막 문제였어요! 최종 점수 '+score+'/'+queue.length);i=0;score=0;build();}
+    render();
+  }
+  $('#mcq-next').onclick=nextQ;
+  $('#mcq-shuffle').onclick=()=>{i=0;score=0;build();render();toast('새로 섞었어요');};
+  return {start(){i=0;score=0;build();render();}};
+})();
+mcq.start();
+
+/* =================== OX =================== */
+const ox=(function(){
+  let queue=[], i=0, score=0, locked=false;
+  function build(){queue=shuffle(OX);}
+  function render(){
+    locked=false;const item=queue[i];
+    $('#ox-prog').textContent=`${i+1} / ${queue.length}`; $('#ox-score').textContent='점수 '+score;
+    $('#ox-q').innerHTML=`<span class="num">Q${i+1}.</span>${item[1]} <span class="tag">[${chName(item[0])}]</span>`;
+    $('#ox-fb').style.display='none';$('#ox-ans').style.display='none';$('#ox-next').style.display='none';
+    $('#ox-o').disabled=false;$('#ox-x').disabled=false;
+  }
+  function answer(val){
+    if(locked)return;locked=true;const item=queue[i];const ok=(val===item[2]);
+    if(ok)score++;$('#ox-score').textContent='점수 '+score;
+    const fb=$('#ox-fb');fb.style.display='block';fb.className='feedback '+(ok?'ok':'no');
+    fb.textContent=ok?'⭕ 정답!':'❌ 오답 (정답: '+(item[2]?'맞다 ⭕':'아니다 ❌')+')';
+    if(item[3]){const ans=$('#ox-ans');ans.style.display='block';ans.textContent=item[3];}
+    $('#ox-o').disabled=true;$('#ox-x').disabled=true;$('#ox-next').style.display='inline-block';
+  }
+  function nextQ(){i++;if(i>=queue.length){toast('마지막 문제! 최종 점수 '+score+'/'+queue.length);i=0;score=0;build();}render();}
+  $('#ox-o').onclick=()=>answer(true);$('#ox-x').onclick=()=>answer(false);
+  $('#ox-next').onclick=nextQ;
+  $('#ox-shuffle').onclick=()=>{i=0;score=0;build();render();toast('새로 섞었어요');};
+  return {start(){i=0;score=0;build();render();}};
+})();
+ox.start();
+
+/* =================== 짝짓기 =================== */
+const match=(function(){
+  let si=0, sel=null, matched=0;
+  function render(){
+    const set=MATCH[si]; matched=0; sel=null;
+    $('#match-title').textContent=(si+1)+'/'+MATCH.length+'  ·  '+set.title;
+    $('#match-done').style.display='none';
+    const L=$('#match-left'), R=$('#match-right');
+    L.innerHTML='';R.innerHTML='';
+    const lefts=shuffle(set.pairs.map((p,idx)=>({v:p[0],key:idx})));
+    const rights=shuffle(set.pairs.map((p,idx)=>({v:p[1],key:idx})));
+    lefts.forEach(o=>{const d=document.createElement('div');d.className='mitem';d.textContent=o.v;d.dataset.key=o.key;d.dataset.side='L';d.onclick=()=>tap(d);L.appendChild(d);});
+    rights.forEach(o=>{const d=document.createElement('div');d.className='mitem';d.textContent=o.v;d.dataset.key=o.key;d.dataset.side='R';d.onclick=()=>tap(d);R.appendChild(d);});
+  }
+  function tap(el){
+    if(el.classList.contains('done'))return;
+    if(!sel){sel=el;el.classList.add('sel');return;}
+    if(sel===el){el.classList.remove('sel');sel=null;return;}
+    if(sel.dataset.side===el.dataset.side){sel.classList.remove('sel');sel=el;el.classList.add('sel');return;}
+    // 한쪽 L 한쪽 R
+    if(sel.dataset.key===el.dataset.key){
+      sel.classList.remove('sel');sel.classList.add('done');el.classList.add('done');sel=null;matched++;
+      if(matched===MATCH[si].pairs.length){$('#match-done').style.display='block';toast('완료! 🎉');}
+    }else{
+      const a=sel,b=el;a.classList.add('badflash');b.classList.add('badflash');a.classList.remove('sel');
+      setTimeout(()=>{a.classList.remove('badflash');b.classList.remove('badflash');},450);sel=null;
+    }
+  }
+  $('#match-nextset').onclick=()=>{si=(si+1)%MATCH.length;render();};
+  $('#match-prev').onclick=()=>{si=(si-1+MATCH.length)%MATCH.length;render();};
+  return {start(){si=0;render();}};
+})();
+match.start();
+</script>
+</body>
+</html>
